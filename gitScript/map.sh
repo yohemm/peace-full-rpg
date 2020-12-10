@@ -1,7 +1,8 @@
 #! / Bin / bash
 echo "Mettre la description de l'update"
 read update
-git checkout dev
-git add .py
+cd ..
+git checkout map
+git add map.txt
 git commit -m "$update"
-git push origin dev
+git push origin map
