@@ -1,7 +1,11 @@
 import pygame
+import pickle
 
 # On initialise pygame
 pygame.init()
+
+
+clock = pygame.time.Clock()
 
 map_x = int(input('Entrez la longeur de la map en block : '))
 map_y = int(input('Entrez la hauteur de la map en block : '))
@@ -10,40 +14,41 @@ for y in range(map_y):
     map_list.append(list())
     for x in range(map_x):
         map_list[y].append(0)
-print(len(map_list))
-print(len(map_list[1]))
 id = int(input('Selectionner un id : '))
 pygame.display.set_caption('CREATION MAP')
 screen_size = (1300, 700)
-if map_x // 1300 > map_y // 700:
-    size = 1300 // map_x
+if screen_size[0] // map_x > screen_size[1] // map_y:
+    size = screen_size[0] // map_x
 else:
-    size = 700 // map_y
-print(size)
+    print('OK')
+    size = screen_size[1] // map_y
+intsize = size
 screen = pygame.display.set_mode(screen_size)
 
-rock = pygame.image.load('asset/Rock.png')
-rock = pygame.transform.scale(rock, (size, size)).convert_alpha()
-tree = pygame.image.load('asset/Tree.png')
-tree = pygame.transform.scale(tree, (size, size)).convert_alpha()
-tree2 = pygame.image.load('asset/Tree2.png')
-tree2 = pygame.transform.scale(tree2, (size, size)).convert_alpha()
-grass = pygame.image.load('asset/Grass.png')
-grass = pygame.transform.scale(grass, (size, size)).convert()
-wall = pygame.image.load('asset/Wall.png')
-wall = pygame.transform.scale(wall, (size, size)).convert()
-watter = pygame.image.load('asset/Water.png')
-watter = pygame.transform.scale(watter, (size, size)).convert()
-sand = pygame.image.load('asset/Sand.png')
-sand = pygame.transform.scale(sand, (size, size)).convert()
-way = pygame.image.load('asset/Way.png')
-way = pygame.transform.scale(way, (size, size)).convert_alpha()
-fall = pygame.image.load('asset/Fall.png')
-fall = pygame.transform.scale(fall, (size, size)).convert()
-snow = pygame.image.load('asset/Snow.png')
-snow = pygame.transform.scale(snow, (size, size)).convert()
-roof = pygame.image.load('asset/Roof.png')
-roof = pygame.transform.scale(roof, (size, size)).convert_alpha()
+x = 0
+y = 0
+
+ROCK = pygame.image.load('asset/tiles/Rock.png')
+
+TREE = pygame.image.load('asset/tiles/tree/simple/Tree.png')
+
+GRASS = pygame.image.load('asset/tiles/Grass.png')
+
+WALL = pygame.image.load('asset/tiles/wall/Wall.png')
+
+WATTER = pygame.image.load('asset/tiles/Water.png')
+
+SAND = pygame.image.load('asset/tiles/Sand.png')
+
+ROAD_SOIL = pygame.image.load('asset/tiles/road/soil/0.png')
+
+ROAD_TOWN = pygame.image.load('asset/tiles/road/town/0.png')
+
+SNOW = pygame.image.load('asset/tiles/Snow.png')
+
+ROOF = pygame.image.load('asset/tiles/roof/red/Roof.png')
+
+resulte = ""
 
 continuer = True
 while continuer:
@@ -56,55 +61,65 @@ while continuer:
             if event.key == pygame.K_z:
                 id = int(input('Selectionner un id : '))
 
+            if event.key == pygame.K_EQUALS:
+                size *= 1.1
+
+            elif event.key == pygame.K_6:
+                size *= 0.9
+
+            if event.key == pygame.K_UP:
+                y += 1 * size
+            elif event.key == pygame.K_DOWN:
+                y -= 1 * size
+
+            if event.key == pygame.K_LEFT:
+                x += 1 * size
+            elif event.key == pygame.K_RIGHT:
+                x -= 1 * size
+#SAVE
             if event.key == pygame.K_s:
-                with open('map.txt', 'w') as filout:
-                    filout.write(str(map_list))
+                with open('map.txt', 'w') as files:
+                    for line in map_list:
+                        resulte += str(line) + '\n'
+                    files.write(resulte)
+                    files.close()
                     print('save')
+            intsize = int(size)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mousse_click = True
 
-
     for i in range(map_x):
         for j in range(map_y):
-            pygame.draw.line(screen,(64, 64, 64), (i*size, j*size),((i*size)+size, j*size))
-            pygame.draw.line(screen,(64,  64,  64), (i*size, j*size),(i*size, (j*size)+size))
+            pos = (i*intsize + x, j*intsize + y)
+            pygame.draw.line(screen,(64,64,64), pos,((i*intsize)+intsize + x, j*intsize + y))
+            pygame.draw.line(screen,(64,64,64), pos,(i*intsize + x, (j*intsize)+intsize + y))
             if mousse_click:
-                if j * size < pygame.mouse.get_pos()[1] < (j * size)+size and i * size < pygame.mouse.get_pos()[0] < (i * size)+size:
-                    if id == 0:
-                        pygame.draw.rect(screen, (00,00,00), ((i*size, j*size), (size ,size)))
-                        map_list[j][i] = id
-                    if id == 1:
-                        screen.blit(grass, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 2:
-                        screen.blit(sand, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 3:
-                        screen.blit(snow, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 4:
-                        screen.blit(way, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 5:
-                        screen.blit(rock, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 6:
-                        screen.blit(fall, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 7:
-                        screen.blit(watter, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 8:
-                        screen.blit(tree, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 9:
-                        screen.blit(wall, (i*size, j*size))
-                        map_list[j][i] = id
-                    elif id == 10:
-                        screen.blit(roof, (i*size, j*size))
-                        map_list[j][i] = id
-
+                if j * intsize + y < pygame.mouse.get_pos()[1] < (j * intsize)+intsize + y and i * intsize + x< pygame.mouse.get_pos()[0] < (i * intsize)+intsize +x:
+                    map_list[j][i] = id
+    for j in range(len(map_list)):
+        for i in range(len(map_list[j])):
+            pos = (i*intsize + x, j*intsize + y)
+            if map_list[j][i] == 1:
+                screen.blit(pygame.transform.scale(GRASS, (intsize, intsize)).convert(), pos)
+            elif map_list[j][i] == 2:
+                screen.blit(pygame.transform.scale(SAND, (intsize, intsize)).convert(), pos)
+            elif map_list[j][i] == 3:
+                screen.blit(pygame.transform.scale(SNOW, (intsize, intsize)).convert(), pos)
+            elif map_list[j][i] == 4:
+                screen.blit(pygame.transform.scale(ROAD_SOIL, (intsize, intsize)).convert(), pos)
+            elif map_list[j][i] == 5:
+                screen.blit(pygame.transform.scale(ROCK, (intsize, intsize)).convert(), pos)
+            elif map_list[j][i] == 6:
+                screen.blit(pygame.transform.scale(WATTER, (intsize, intsize)).convert(), pos)
+            elif map_list[j][i] == 8:
+                screen.blit(pygame.transform.scale(TREE, (intsize, intsize)).convert(), pos)
+            elif map_list[j][i] == 9:
+                screen.blit(pygame.transform.scale(WALL, (intsize, intsize)).convert(), pos)
+            elif map_list[j][i] == 10:
+                screen.blit(pygame.transform.scale(ROOF, (intsize, intsize)).convert(), pos)
 
 
     pygame.display.flip()
+    clock.tick(20)
     pygame.display.update()
+    screen.fill((0, 0, 0))

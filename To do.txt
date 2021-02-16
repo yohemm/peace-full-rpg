@@ -1,0 +1,27 @@
+graphique:
+- création des textures interieur de maison
+- création d'object
+-versionning des textures(1.1, 3.2), different type d'abre, de route,...
+-texturing et annimation du perso principal
+
+
+reflexion:
+- but du jeu:
+	- devenir le plus riches tout en ayant une bon popularitré en vers les pnjs 
+	pour qu'il nous offre de quete
+- Quetes finale
+	- trouver le trésors de ses ancêtres pirate quelque pars dans l'île
+- message du jeu
+	- ne pas etre un fdp mais réussir dans ca vie
+- en quoi notre jeu se demarque des autres RPG
+	- RPG sur une île(grafiquement entouré d'eau avec un univers estivale)
+	- introduction des mécanique hors RPG???
+
+
+dev:
+/ menu pause/settings
+/ creation du systeme de mapping de grande route
+- amélioration des dialogues(avec matheo, je ne trouve pas)
+- systeme d'intraction joueur/object
+- création des quêtes
+- interaction object joueur(object change les variables du joueur)
