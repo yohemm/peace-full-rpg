@@ -2,6 +2,13 @@
 # Peace Full RPGs
 
 <!-- ![Project Banner](path/to/banner/image)  -->
+## 🌟 Project Status
+
+> **Current Status**: **:white_circle: In Beta**  
+> Quick open world 2D demo
+> no maitained
+
+---
 
 ## Overview
 ![test](https://raw.githubusercontent.com/yohemm/RPG/master/asset/animation/sprites/player/idle/0.png)
