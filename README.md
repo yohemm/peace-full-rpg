@@ -4,9 +4,11 @@
 <!-- ![Project Banner](path/to/banner/image)  -->
 ## 🌟 Project Status
 
-> **Current Status**: **:white_circle: In Beta**  
+> **Current Status**: **:white_circle: In Beta**
+> 
 > Quick open world 2D demo
-> no maitained
+>
+> No maintained
 
 ---
 
